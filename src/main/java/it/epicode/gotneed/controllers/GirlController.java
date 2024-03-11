@@ -1,8 +1,11 @@
 package it.epicode.gotneed.controllers;
 
 import it.epicode.gotneed.models.Girl;
+import it.epicode.gotneed.models.GirlRequest;
 import it.epicode.gotneed.services.GirlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +19,8 @@ public class GirlController {
     private GirlService girlService;
 
     @GetMapping("/girls")
-    public List<Girl> getAll() {
-        return girlService.getAllGirls();
+    public Page<Girl> getAll(Pageable pageable) {
+        return girlService.getAllGirls(pageable);
     }
 
     @GetMapping("/girls/{id}")
@@ -32,14 +35,14 @@ public class GirlController {
     }
 
     @PostMapping("/girls")
-    public Girl saveGirl(@RequestBody Girl girl) {//il parametro d'ingresso è estratto dal body
-        return girlService.saveGirl(girl);
+    public Girl saveGirl(@RequestBody GirlRequest girlRequest) {//il parametro d'ingresso è estratto dal body
+        return girlService.saveGirl(girlRequest);
     }
 
     @PutMapping("/girls/{id}")
-    public ResponseEntity<Girl> updateGirl(@PathVariable int id, @RequestBody Girl girl) {
+    public ResponseEntity<Girl> updateGirl(@PathVariable int id, @RequestBody GirlRequest girlRequest) {
         try {
-            Girl g = girlService.updateGirl(id, girl);
+            Girl g = girlService.updateGirl(id, girlRequest);
             return new ResponseEntity<Girl>(HttpStatus.OK);
         }
         catch (NoSuchElementException e){

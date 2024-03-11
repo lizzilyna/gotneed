@@ -1,7 +1,14 @@
 package it.epicode.gotneed.services;
 
+import it.epicode.gotneed.exceptions.NotFoundException;
 import it.epicode.gotneed.models.Girl;
+import it.epicode.gotneed.models.GirlRequest;
+import it.epicode.gotneed.repositories.GirlRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,35 +16,31 @@ import java.util.NoSuchElementException;
 
 @Service
 public class GirlService {
-    private List<Girl>girls=new ArrayList<>();
-    public List<Girl>getAllGirls(){
-        return girls;
+    @Autowired
+    private GirlRepository girlRepository;
+    public Page<Girl> getAllGirls(Pageable pageable){
+        return girlRepository.findAll(pageable);
     }
 
     public Girl getGirlById(int id){
-        return girls.stream().filter(girl -> girl.getId()==id).findAny().
-                orElseThrow(()->new NoSuchElementException("Girl not found"));
+        return girlRepository.findById(id).orElseThrow(()->new NotFoundException("Girl con id="+id+" non trovata"));
     }
 
-    public Girl saveGirl (Girl girl){
-        girls.add(girl);
-        return girl;
+    public Girl saveGirl (GirlRequest girlRequest){
+        Girl girl=new Girl(girlRequest.getUsername(),girlRequest.getCognome(),girlRequest.getUsername(),girlRequest.getEmail(),girlRequest.getDataNascita());
+        return girlRepository.save(girl);
     }
 
-    public Girl updateGirl (int id, Girl girl) throws NoSuchElementException{
+    public Girl updateGirl (int id, GirlRequest girlRequest) throws NotFoundException{
         Girl g=getGirlById(id);
-        g.setNome(girl.getNome());
-        g.setCognome(girl.getCognome());
-        g.setUsername(girl.getUsername());
-        g.setEmail(girl.getEmail());
-        g.setDataNascita(girl.getDataNascita());
+        g.setUsername(girlRequest.getUsername());
 
-        return g;
+        return girlRepository.save(g);
     }
 
-    public void deleteGirl (int id) throws NoSuchElementException { //non String perché il messaggio arriverebbe al controller che non se ne fa niente
+    public void deleteGirl (int id) throws NotFoundException { //non String perché il messaggio arriverebbe al controller che non se ne fa niente
         Girl g = getGirlById(id);
-        girls.remove(g);
+        girlRepository.delete(g);
     }
 
 
