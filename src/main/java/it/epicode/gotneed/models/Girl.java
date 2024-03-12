@@ -38,6 +38,78 @@ public class Girl {
         this.avatar = "https://ui-avatars.com/api/?name="+nome+"+"+cognome;
     }
 
+    public Girl() {
+    }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getDataNascita() {
+        return dataNascita;
+    }
+
+    public void setDataNascita(LocalDate dataNascita) {
+        this.dataNascita = dataNascita;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public List<Help> getOfferti() {
+        return offerti;
+    }
+
+    public void setOfferti(List<Help> offerti) {
+        this.offerti = offerti;
+    }
+
+    public List<Help> getRichiesti() {
+        return richiesti;
+    }
+
+    public void setRichiesti(List<Help> richiesti) {
+        this.richiesti = richiesti;
+    }
 }

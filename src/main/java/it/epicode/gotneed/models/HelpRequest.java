@@ -8,6 +8,6 @@ public class HelpRequest {
     @Autowired
 
     private String nome;
-    private int idOfferedBy;
-    private int idRequestedBy;
+    private Girl offeredBy;
+    private Girl requestedBy;
 }

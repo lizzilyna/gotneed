@@ -12,6 +12,12 @@ public class GirlRequest {
     private String email;
     private LocalDate dataNascita;
 
-
+    public GirlRequest(String nome, String cognome, String username, String email, LocalDate dataNascita) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.username = username;
+        this.email = email;
+        this.dataNascita = dataNascita;
     }
+}
 

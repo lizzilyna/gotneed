@@ -31,15 +31,13 @@ public class HelpService {
                 orElseThrow(()->new NotFoundException("Help con id="+id+" non trovato"));
     }
 
-    public Help saveHelp (HelpRequest helpRequest){
-        Girl offeredBy=girlService.getGirlById(helpRequest.getIdOfferedBy());
-        Girl requestedBy=girlService.getGirlById(helpRequest.getIdRequestedBy());
+    public Help saveHelp (HelpRequest helpRequest)throws NotFoundException{
+        Girl offeredBy=girlService.getGirlById(helpRequest.getOfferedBy().getId());
+        Girl requestedBy=girlService.getGirlById(helpRequest.getRequestedBy().getId());
         if (offeredBy == null || requestedBy == null) {
-            throw new NotFoundException("Una o entrambe le ragazze non trovate.");
+            throw new NotFoundException("Girls non trovate");
         }
-        Help help= new Help(helpRequest.getNome());
-        help.setOfferedBy(offeredBy);
-        help.setRequestedBy(requestedBy);
+        Help help= new Help(helpRequest.getNome(), helpRequest.getOfferedBy(),helpRequest.getRequestedBy());
 
         return helpRepository.save(help);
 
@@ -49,6 +47,7 @@ public class HelpService {
     public Help updateHelp (int id, HelpRequest helpRequest)throws NotFoundException{
         Help help =getHelpById(id);
         help.setNome(helpRequest.getNome());
+        help.setOfferedBy(helpRequest.getOfferedBy());
 
         return help;
     }

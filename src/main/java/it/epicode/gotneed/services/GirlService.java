@@ -27,7 +27,7 @@ public class GirlService {
     }
 
     public Girl saveGirl (GirlRequest girlRequest){
-        Girl girl=new Girl(girlRequest.getUsername(),girlRequest.getCognome(),girlRequest.getUsername(),girlRequest.getEmail(),girlRequest.getDataNascita());
+        Girl girl=new Girl(girlRequest.getNome(),girlRequest.getCognome(),girlRequest.getUsername(),girlRequest.getEmail(),girlRequest.getDataNascita());
         return girlRepository.save(girl);
     }
 

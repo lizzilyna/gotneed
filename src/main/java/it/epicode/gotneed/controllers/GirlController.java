@@ -19,45 +19,32 @@ public class GirlController {
     private GirlService girlService;
 
     @GetMapping("/girls")
-    public Page<Girl> getAll(Pageable pageable) {
+    public Page<Girl> getAll(Pageable pageable)
+    {
         return girlService.getAllGirls(pageable);
     }
 
     @GetMapping("/girls/{id}")
-    public ResponseEntity<Girl> getGirlById(@PathVariable int id) {//responseEntity wrappa la girl
-        try {
-            Girl girl = girlService.getGirlById(id);
-            return new ResponseEntity<Girl>(girl, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<Girl>(HttpStatus.NOT_FOUND);
-        }
+    public Girl getGirlById(@PathVariable int id) {
+      return girlService.getGirlById(id);
 
     }
 
     @PostMapping("/girls")
     public Girl saveGirl(@RequestBody GirlRequest girlRequest) {//il parametro d'ingresso è estratto dal body
+
         return girlService.saveGirl(girlRequest);
     }
 
     @PutMapping("/girls/{id}")
-    public ResponseEntity<Girl> updateGirl(@PathVariable int id, @RequestBody GirlRequest girlRequest) {
-        try {
-            Girl g = girlService.updateGirl(id, girlRequest);
-            return new ResponseEntity<Girl>(HttpStatus.OK);
-        }
-        catch (NoSuchElementException e){
-            return new ResponseEntity<Girl>(HttpStatus.NOT_FOUND);
-        }
+    public Girl updateGirl(@PathVariable int id, @RequestBody GirlRequest girlRequest) {
+
+        return girlService.updateGirl(id, girlRequest);
+
     }
 
     @DeleteMapping("/girls/{id}")
-    public ResponseEntity<String> deleteGirl(@PathVariable int id){
-        try {
-              girlService.deleteGirl(id);
-              return new ResponseEntity<String>("Girl con id="+id+" cancellata", HttpStatus.OK);
-          }
-          catch (NoSuchElementException e){
-              return new ResponseEntity<String>("Girl con id="+id+" non trovata", HttpStatus.NOT_FOUND);
+    public void deleteGirl(@PathVariable int id){
+       girlService.deleteGirl(id);
     }
-}
 }

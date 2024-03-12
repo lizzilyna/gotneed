@@ -25,7 +25,54 @@ public class Help {
     @JoinColumn(name = "requested_by")
     private Girl requestedBy;
 
-    public Help(String nome) {
+
+
+    public Help(String nome, Girl offeredBy, Girl requestedBy) {
+
+        this.nome = nome;
+        this.offeredBy = offeredBy;
+        this.requestedBy = requestedBy;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public Girl getOfferedBy() {
+        return offeredBy;
+    }
+
+    public void setOfferedBy(Girl offeredBy) {
+        this.offeredBy = offeredBy;
+    }
+
+    public Girl getRequestedBy() {
+        return requestedBy;
+    }
+
+    public void setRequestedBy(Girl requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
+
 }
