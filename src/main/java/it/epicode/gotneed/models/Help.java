@@ -10,11 +10,11 @@ import java.util.Random;
 public class Help {
 
 
-
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String nome;
+    @Enumerated(EnumType.STRING)
+    private HelpType type;
     private String cover = "https://picsum.photos/200/300";
 
     @ManyToOne
@@ -26,10 +26,9 @@ public class Help {
     private Girl requestedBy;
 
 
+    public Help(HelpType type, Girl offeredBy, Girl requestedBy) {
 
-    public Help(String nome, Girl offeredBy, Girl requestedBy) {
-
-        this.nome = nome;
+        this.type = type;
         this.offeredBy = offeredBy;
         this.requestedBy = requestedBy;
     }
@@ -42,12 +41,12 @@ public class Help {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public HelpType getType() {
+        return type;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setType(HelpType type) {
+        this.type = type;
     }
 
     public String getCover() {
@@ -73,6 +72,4 @@ public class Help {
     public void setRequestedBy(Girl requestedBy) {
         this.requestedBy = requestedBy;
     }
-
-
 }

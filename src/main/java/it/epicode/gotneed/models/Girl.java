@@ -18,6 +18,7 @@ public class Girl {
     private String cognome;
     private String username;
     private String email;
+    private String provincia;
     private LocalDate dataNascita;
     private String avatar;
 
@@ -28,13 +29,16 @@ public class Girl {
     private List<Help> richiesti = new ArrayList<>();
 
 
-    public Girl(String nome, String cognome, String username, String email, LocalDate dataNascita)
+    public Girl(String nome, String cognome, String username, String email, String provincia, LocalDate dataNascita)
     {
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
         this.email = email;
+        this.provincia= provincia;
         this.dataNascita = dataNascita;
+        this.offerti = new ArrayList<>();
+        this.richiesti = new ArrayList<>();
         this.avatar = "https://ui-avatars.com/api/?name="+nome+"+"+cognome;
     }
 
@@ -79,6 +83,14 @@ public class Girl {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 
     public LocalDate getDataNascita() {

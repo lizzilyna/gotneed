@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class HelpService {
 
 
     public Page<Help> getAllHelps(Pageable pageable){
+
         return helpRepository.findAll(pageable);
     }
 
@@ -31,22 +33,28 @@ public class HelpService {
                 orElseThrow(()->new NotFoundException("Help con id="+id+" non trovato"));
     }
 
+    public Page <Help> getOfferedHelpByProvincia(@RequestParam String provincia, Pageable pageable) throws NotFoundException{
+        return helpRepository.findByOfferedByProvincia(provincia, pageable);
+    }
+    public Page <Help> getRequestedHelpByProvincia(@RequestParam String provincia, Pageable pageable) throws NotFoundException{
+        return helpRepository.findByRequestedByProvincia(provincia, pageable);
+    }
+
     public Help saveHelp (HelpRequest helpRequest)throws NotFoundException{
         Girl offeredBy=girlService.getGirlById(helpRequest.getOfferedBy().getId());
         Girl requestedBy=girlService.getGirlById(helpRequest.getRequestedBy().getId());
         if (offeredBy == null || requestedBy == null) {
             throw new NotFoundException("Girls non trovate");
         }
-        Help help= new Help(helpRequest.getNome(), helpRequest.getOfferedBy(),helpRequest.getRequestedBy());
+        Help help= new Help(helpRequest.getType(), helpRequest.getOfferedBy(),helpRequest.getRequestedBy());
 
         return helpRepository.save(help);
-
 
     }
 
     public Help updateHelp (int id, HelpRequest helpRequest)throws NotFoundException{
         Help help =getHelpById(id);
-        help.setNome(helpRequest.getNome());
+        help.setType(helpRequest.getType());
         help.setOfferedBy(helpRequest.getOfferedBy());
 
         return help;
