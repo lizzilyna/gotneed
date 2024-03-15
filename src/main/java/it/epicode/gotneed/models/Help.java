@@ -25,6 +25,8 @@ public class Help {
     @JoinColumn(name = "requested_by")
     private Girl requestedBy;
 
+    public Help() {
+    }
 
     public Help(HelpType type, Girl offeredBy, Girl requestedBy) {
 

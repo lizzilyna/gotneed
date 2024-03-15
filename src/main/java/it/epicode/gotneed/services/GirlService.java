@@ -28,6 +28,9 @@ public class GirlService {
 
     public Girl saveGirl (GirlRequest girlRequest){
         Girl girl=new Girl(girlRequest.getNome(),girlRequest.getCognome(),girlRequest.getUsername(),girlRequest.getEmail(), girlRequest.getProvincia(), girlRequest.getDataNascita());
+        girl.setOfferti(girlRequest.getOfferti());
+        girl.setRichiesti(girlRequest.getRichiesti());
+
         return girlRepository.save(girl);
     }
 
