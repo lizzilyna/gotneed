@@ -17,6 +17,7 @@ public class GirlRequest {
     private List<Help> offerti;
     private List<Help> richiesti;
 
+
     public GirlRequest(String nome, String cognome, String username, String email, String provincia, LocalDate dataNascita) {
         this.nome = nome;
         this.cognome = cognome;
@@ -26,6 +27,10 @@ public class GirlRequest {
         this.dataNascita = dataNascita;
         this.offerti=new ArrayList<>();
         this.richiesti=new ArrayList<>();
+
+    }
+
+    public GirlRequest() {
     }
 }
 
