@@ -1,5 +1,6 @@
 package it.epicode.gotneed.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class Help {
     private String cover = "https://picsum.photos/200/300";
 
     @ManyToOne
+    //@JsonIgnore in caso vada in frattale girl/help/girl
     @JoinColumn(name = "offered_by")
     private Girl offeredBy;
 

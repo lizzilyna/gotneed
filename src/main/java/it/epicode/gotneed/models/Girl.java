@@ -16,7 +16,10 @@ public class Girl {
     private int id;
     private String nome;
     private String cognome;
+
+    @Column(unique = true)
     private String username;
+    private String password;
     private String email;
     private String provincia;
     private LocalDate dataNascita;
@@ -29,11 +32,12 @@ public class Girl {
     private List<Help> richiesti = new ArrayList<>();
 
 
-    public Girl(String nome, String cognome, String username, String email, String provincia, LocalDate dataNascita)
+    public Girl(String nome, String cognome, String username, String password, String email, String provincia, LocalDate dataNascita)
     {
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
+        this.password=password;
         this.email = email;
         this.provincia= provincia;
         this.dataNascita = dataNascita;

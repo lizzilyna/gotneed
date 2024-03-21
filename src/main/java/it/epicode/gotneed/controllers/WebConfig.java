@@ -1,4 +1,4 @@
-package it.epicode.gotneed.controllers;
+/*package it.epicode.gotneed.controllers;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
@@ -11,3 +11,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 }
+*/

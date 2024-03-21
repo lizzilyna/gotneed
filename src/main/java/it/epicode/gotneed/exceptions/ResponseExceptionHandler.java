@@ -20,4 +20,16 @@ public class ResponseExceptionHandler {
 
         return new ErrorResponse(e.getMessage());
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse BadRequestExceptionHandler (BadRequestException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler(UnAuthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse UnAuthorizedExceptionHandler (UnAuthorizedException e) {
+        return new ErrorResponse(e.getMessage());
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class GirlService {
@@ -27,11 +28,15 @@ public class GirlService {
     }
 
     public Girl saveGirl (GirlRequest girlRequest){
-        Girl girl=new Girl(girlRequest.getNome(),girlRequest.getCognome(),girlRequest.getUsername(),girlRequest.getEmail(), girlRequest.getProvincia(), girlRequest.getDataNascita());
+        Girl girl=new Girl(girlRequest.getNome(),girlRequest.getCognome(),girlRequest.getUsername(), girlRequest.getPassword(), girlRequest.getEmail(), girlRequest.getProvincia(), girlRequest.getDataNascita());
         girl.setOfferti(girlRequest.getOfferti());
         girl.setRichiesti(girlRequest.getRichiesti());
 
         return girlRepository.save(girl);
+    }
+
+    public Girl getGirlByUsername (String username) {
+    return  girlRepository.findByUsername(username).orElseThrow(()->new NotFoundException("Girl con username="+username+" non trovata"));
     }
 
     public Girl updateGirl (int id, GirlRequest girlRequest) throws NotFoundException{
@@ -40,6 +45,8 @@ public class GirlService {
 
         return girlRepository.save(g);
     }
+
+
 
     public void deleteGirl (int id) throws NotFoundException { //non String perché il messaggio arriverebbe al controller che non se ne fa niente
         Girl g = getGirlById(id);
