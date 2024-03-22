@@ -2,15 +2,18 @@ package it.epicode.gotneed.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 @Data
 @Entity
-public class Girl {
+public class Girl implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -20,10 +23,12 @@ public class Girl {
     @Column(unique = true)
     private String username;
     private String password;
+
     private String email;
     private String provincia;
     private LocalDate dataNascita;
     private String avatar;
+    private Role role = Role.USER;
 
     @OneToMany(mappedBy = "offeredBy", cascade = CascadeType.ALL)
     private List<Help> offerti = new ArrayList<>();
@@ -48,6 +53,8 @@ public class Girl {
 
     public Girl() {
     }
+
+
 
     public int getId() {
         return id;
@@ -75,6 +82,26 @@ public class Girl {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 
     public void setUsername(String username) {
@@ -127,5 +154,18 @@ public class Girl {
 
     public void setRichiesti(List<Help> richiesti) {
         this.richiesti = richiesti;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
