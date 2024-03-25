@@ -3,6 +3,7 @@ package it.epicode.gotneed.controllers;
 import it.epicode.gotneed.exceptions.BadRequestException;
 import it.epicode.gotneed.models.Girl;
 import it.epicode.gotneed.models.GirlRequest;
+import it.epicode.gotneed.security.JwtTools;
 import it.epicode.gotneed.services.GirlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,9 @@ import java.util.NoSuchElementException;
 public class GirlController {
     @Autowired
     private GirlService girlService;
+
+    @Autowired
+    private JwtTools jwtTools;
 
     @GetMapping("/girls")
     public Page<Girl> getAll(Pageable pageable)

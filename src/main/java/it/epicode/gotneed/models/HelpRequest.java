@@ -7,18 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 public class HelpRequest {
-    @Autowired
+    //@Autowired
 
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     private HelpType type;
 
-    private Girl offeredBy;
-    private Girl requestedBy;
+    private Integer offeredById;
+    private Integer requestedById;
 
-    public HelpRequest(HelpType type, Girl offeredBy, Girl requestedBy) {
+    public HelpRequest(HelpType type, Integer offeredById, Integer requestedById) {
         this.type=type;
-        this.offeredBy = offeredBy;
-        this.requestedBy = requestedBy;
+        this.offeredById = offeredById;
+        this.requestedById = requestedById;
 
 
 

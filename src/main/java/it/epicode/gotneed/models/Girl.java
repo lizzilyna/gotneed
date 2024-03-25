@@ -1,5 +1,6 @@
 package it.epicode.gotneed.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,9 +31,12 @@ public class Girl implements UserDetails {
     private String avatar;
     private Role role = Role.USER;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "offeredBy", cascade = CascadeType.ALL)
     private List<Help> offerti = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "requestedBy", cascade = CascadeType.ALL)
     private List<Help> richiesti = new ArrayList<>();
 

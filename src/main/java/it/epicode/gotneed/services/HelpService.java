@@ -40,28 +40,37 @@ public class HelpService {
         return helpRepository.findByRequestedByProvincia(provincia, pageable);
     }
 
-    public Help saveHelp (HelpRequest helpRequest)throws NotFoundException{
-        Girl offeredBy=girlService.getGirlById(helpRequest.getOfferedBy().getId());
-        Girl requestedBy=girlService.getGirlById(helpRequest.getRequestedBy().getId());
-        if (offeredBy == null || requestedBy == null) {
-            throw new NotFoundException("Girls non trovate");
+                public Help saveHelp (HelpRequest helpRequest)throws NotFoundException{
+                Girl offeredBy=girlService.getGirlById(helpRequest.getOfferedById());
+                Girl requestedBy=null;
+                if (helpRequest.getRequestedById()!= null) {
+                    requestedBy= girlService.getGirlById(helpRequest.getRequestedById());
+                }
+                Help help= new Help();
+                help.setType(helpRequest.getType());
+                help.setOfferedBy(offeredBy);
+                help.setRequestedBy(requestedBy);
+                return helpRepository.save(help);
+
+            }
+
+            public Help updateHelp (int id, HelpRequest helpRequest)throws NotFoundException{
+                Help help =getHelpById(id);
+                if (helpRequest.getType()!=null) help.setType(helpRequest.getType());
+                if (helpRequest.getOfferedById() !=null){
+                    Girl offeredBy=girlService.getGirlById(helpRequest.getOfferedById());
+                    help.setOfferedBy(offeredBy);
+                }
+                if (helpRequest.getRequestedById()!=null){
+                    Girl requestedBy=girlService.getGirlById(helpRequest.getRequestedById());
+                    help.setRequestedBy(requestedBy);
+                }
+
+                return helpRepository.save(help);
+            }
+
+            public void deleteHelp (int id)throws NotFoundException{
+                Help help=getHelpById (id);
+                helpRepository.delete(help);
+            }
         }
-        Help help= new Help(helpRequest.getType(), helpRequest.getOfferedBy(),helpRequest.getRequestedBy());
-
-        return helpRepository.save(help);
-
-    }
-
-    public Help updateHelp (int id, HelpRequest helpRequest)throws NotFoundException{
-        Help help =getHelpById(id);
-        help.setType(helpRequest.getType());
-        help.setOfferedBy(helpRequest.getOfferedBy());
-
-        return help;
-    }
-
-    public void deleteHelp (int id)throws NotFoundException{
-        Help help=getHelpById (id);
-        helpRepository.delete(help);
-    }
-}
