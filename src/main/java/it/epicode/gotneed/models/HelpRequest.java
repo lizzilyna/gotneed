@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 public class HelpRequest {
-    //@Autowired
+    @Autowired
 
-    //@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private HelpType type;
 
     private Integer offeredById;

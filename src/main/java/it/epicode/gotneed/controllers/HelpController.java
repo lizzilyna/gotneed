@@ -45,7 +45,7 @@ public class HelpController {
         return ResponseEntity.ok(HelpType.values());
     }
 
-    @PostMapping
+    @PostMapping ("/helps")
     public Help saveHelp (@RequestBody HelpRequest helpRequest) {
         return helpService.saveHelp(helpRequest);
 
