@@ -25,14 +25,23 @@ public class HelpController {
         return helpService.getAllHelps(pageable);
     }
 
-    @GetMapping("/helps/requested")
-    public Page<Help> getRequestedHelpByProvincia(@RequestParam String provincia, Pageable pageable) {
-        return helpService.getRequestedHelpByProvincia(provincia, pageable);
 
-    }
     @GetMapping("/helps/offered")
-    public Page<Help> getOfferedHelpByProvincia(@RequestParam String provincia, Pageable pageable) {
-        return helpService.getOfferedHelpByProvincia(provincia, pageable);
+    public Page<Help> getOfferedHelpByProvinciaAndType(@RequestParam String provincia, @RequestParam(required = false) HelpType type, Pageable pageable) {
+        if (type != null) {
+            return helpService.getOfferedHelpByProvinciaAndType(provincia, type, pageable);
+        }else{
+            return helpService.getOfferedHelpByProvincia(provincia, pageable);
+        }
+    }
+
+    @GetMapping("/helps/requested")
+    public Page<Help> getRequestedHelp(@RequestParam String provincia, @RequestParam(required = false) HelpType type, Pageable pageable) {
+        if (type != null) {
+            return helpService.getRequestedHelpByProvinciaAndType(provincia, type, pageable);
+        } else {
+            return helpService.getRequestedHelpByProvincia(provincia, pageable);
+        }
     }
 
     @GetMapping ("/helps/{id}")
@@ -45,7 +54,7 @@ public class HelpController {
         return ResponseEntity.ok(HelpType.values());
     }
 
-    @PostMapping
+    @PostMapping ("/helps")
     public Help saveHelp (@RequestBody HelpRequest helpRequest) {
         return helpService.saveHelp(helpRequest);
 

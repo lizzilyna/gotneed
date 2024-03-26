@@ -27,6 +27,8 @@ public class Help {
     @JoinColumn(name = "requested_by")
     private Girl requestedBy;
 
+    private Role role = Role.USER;
+
     public Help() {
     }
 

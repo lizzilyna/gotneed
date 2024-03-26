@@ -54,6 +54,7 @@ public class SecurityChain {
         .requestMatchers("/girls/**").permitAll()
         .requestMatchers("/helps/**").permitAll()
         .requestMatchers("/**").denyAll()
+
                 );
 
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
