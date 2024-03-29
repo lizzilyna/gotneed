@@ -4,6 +4,7 @@ import it.epicode.gotneed.exceptions.NotFoundException;
 import it.epicode.gotneed.models.Girl;
 import it.epicode.gotneed.models.GirlRequest;
 import it.epicode.gotneed.models.Help;
+import it.epicode.gotneed.models.HelpType;
 import it.epicode.gotneed.repositories.GirlRepository;
 import it.epicode.gotneed.repositories.HelpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,30 @@ public class GirlService {
         return girlRepository.findById(id).orElseThrow(()->new NotFoundException("Girl con id="+id+" non trovata"));
     }
 
-    public Girl saveGirl (GirlRequest girlRequest){
+    public List<String> findUsernamesByTypeAndProvincia(HelpType type, String provincia) {
+        // Recupera tutti gli aiuti di un certo tipo.
+        List<Help> helps = helpRepository.findByType(type);
+        List<String> usernames = helps.stream()
+                .filter(help ->  {
+                    // Controllo che sia offeredBy.provincia che requestedBy.provincia non siano null prima del confronto
+                    boolean isOfferedByProvinciaMatch = help.getOfferedBy() != null && help.getOfferedBy().getProvincia() != null && help.getOfferedBy().getProvincia().equals(provincia);
+                    boolean isRequestedByProvinciaMatch = help.getRequestedBy() != null && help.getRequestedBy().getProvincia() != null && help.getRequestedBy().getProvincia().equals(provincia);
+                    return isOfferedByProvinciaMatch || isRequestedByProvinciaMatch;
+                })  .map(help -> {
+                    if (help.getOfferedBy() != null && help.getOfferedBy().getProvincia().equals(provincia)) {
+                        return help.getOfferedBy().getUsername();
+                    } else if (help.getRequestedBy() != null && help.getRequestedBy().getProvincia().equals(provincia)) {
+                        return help.getRequestedBy().getUsername();
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        return usernames;}
+
+
+        public Girl saveGirl (GirlRequest girlRequest){
         Girl girl=new Girl(
                 girlRequest.getNome(),
                 girlRequest.getCognome(),
@@ -66,6 +90,8 @@ public class GirlService {
     public Girl getGirlByUsername (String username) {
     return  girlRepository.findByUsername(username).orElseThrow(()->new NotFoundException("Girl con username="+username+" non trovata"));
     }
+
+
 
     public Girl updateGirl (int id, GirlRequest girlRequest) throws NotFoundException{
         Girl g=getGirlById(id);

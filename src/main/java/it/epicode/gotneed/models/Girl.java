@@ -32,11 +32,11 @@ public class Girl implements UserDetails {
     private Role role = Role.USER;
 
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "offeredBy", cascade = CascadeType.ALL)
     private List<Help> offerti = new ArrayList<>();
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "requestedBy", cascade = CascadeType.ALL)
     private List<Help> richiesti = new ArrayList<>();
 

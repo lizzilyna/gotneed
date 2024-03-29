@@ -3,6 +3,7 @@ package it.epicode.gotneed.controllers;
 import it.epicode.gotneed.exceptions.BadRequestException;
 import it.epicode.gotneed.models.Girl;
 import it.epicode.gotneed.models.GirlRequest;
+import it.epicode.gotneed.models.HelpType;
 import it.epicode.gotneed.security.JwtTools;
 import it.epicode.gotneed.services.GirlService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,18 @@ public class GirlController {
       return girlService.getGirlById(id);
 
     }
+
+    @GetMapping("girls/usernames")
+    public ResponseEntity<List<String>> getHelpUsernames(
+            @RequestParam HelpType type,
+            @RequestParam String provincia) {
+        List<String> usernames = girlService.findUsernamesByTypeAndProvincia(type, provincia);
+        if (usernames.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(usernames);
+
+}
 
     @PostMapping("/girls")
     public Girl saveGirl(@RequestBody @Validated GirlRequest girlRequest, BindingResult bindingResult) {//il parametro d'ingresso è estratto dal body
