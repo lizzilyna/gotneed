@@ -1,6 +1,7 @@
 package it.epicode.gotneed.controllers;
 
 import it.epicode.gotneed.exceptions.BadRequestException;
+import it.epicode.gotneed.models.EmailDetails;
 import it.epicode.gotneed.models.Girl;
 import it.epicode.gotneed.models.GirlRequest;
 import it.epicode.gotneed.models.HelpType;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +30,7 @@ public class GirlController {
     private JwtTools jwtTools;
 
     @Autowired
+    private JavaMailSender mailSender;
 
     @GetMapping("/girls")
     public Page<Girl> getAll(Pageable pageable)
@@ -59,6 +63,23 @@ public class GirlController {
         }
                     return girlService.saveGirl(girlRequest);
         }
+
+    @PostMapping("/send-email")
+    public String sendEmail(@RequestBody EmailDetails emailDetails) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("noreply@example.com");
+            message.setTo(emailDetails.getRecipient());
+            message.setSubject(emailDetails.getSubject());
+            message.setText(emailDetails.getMessage());
+            mailSender.send(message);
+            return "Email sent successfully";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error in sending email: " + e.getMessage();
+        }
+
+}
 
     @PutMapping("/girls/{id}")
     public Girl updateGirl(@PathVariable int id, @RequestBody @Validated GirlRequest girlRequest, BindingResult bindingResult) {//il parametro d'ingresso è estratto dal body
