@@ -7,8 +7,6 @@ Ho usato Angular per il frontend e Java con Spring per il backend. Questa combin
 Altre tecnologie coinvolte includono Maven per la gestione delle dipendenze e la build del progetto, SQL per la gestione del database PostgreSQL, e Postman per testare le API e assicurare il corretto funzionamento del sistema.
 L'obiettivo di GotNeed è creare un ambiente inclusivo e collaborativo dove le donne possano condividere le proprie abilità, ricevere supporto reciproco e rafforzare il senso di comunità. La gamification dell'esperienza utente, ispirata al concetto di collezionare figurine, renderà l'interazione con la piattaforma divertente e gratificante.
 
-GotNeed spera di contribuire alla promozione dell'empowerment e della solidarietà tra le donne attraverso la tecnologia.
-
 
 Link al frontend
 https://github.com/lizzilyna/fs0523-Barbara-Panzetta.git
