@@ -26,6 +26,8 @@ public class GirlController {
     @Autowired
     private JwtTools jwtTools;
 
+    @Autowired
+
     @GetMapping("/girls")
     public Page<Girl> getAll(Pageable pageable)
     {

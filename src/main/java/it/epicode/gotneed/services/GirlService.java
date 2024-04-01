@@ -10,6 +10,9 @@ import it.epicode.gotneed.repositories.HelpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 
@@ -23,6 +26,9 @@ public class GirlService {
 
     @Autowired
     private HelpRepository helpRepository;
+
+    @Autowired
+    private JavaMailSenderImpl javaMailSender;
 
     public Page<Girl> getAllGirls(Pageable pageable){
         return girlRepository.findAll(pageable);
@@ -84,8 +90,20 @@ public class GirlService {
         //girl.setOfferti(girlRequest.getOfferti());
         //girl.setRichiesti(girlRequest.getRichiesti());
 
+            sendMail(girl.getEmail());
+
         return girlRepository.save(girl);
     }
+
+    private void sendMail(String email){
+        SimpleMailMessage message= new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Registrazione GotNeed");
+        message.setText("Registrazione avvenuta con successo");
+        javaMailSender.send(message);
+
+    }
+
 
     public Girl getGirlByUsername (String username) {
     return  girlRepository.findByUsername(username).orElseThrow(()->new NotFoundException("Girl con username="+username+" non trovata"));
@@ -95,7 +113,7 @@ public class GirlService {
 
     public Girl updateGirl (int id, GirlRequest girlRequest) throws NotFoundException{
         Girl g=getGirlById(id);
-        g.setUsername(girlRequest.getUsername());
+
 
         return girlRepository.save(g);
     }
