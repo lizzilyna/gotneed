@@ -53,6 +53,8 @@ public class SecurityChain {
         .requestMatchers("/auth/**").permitAll()
         .requestMatchers("/girls/**").permitAll()
         .requestMatchers("/helps/**").permitAll()
+        .requestMatchers("/dashboard").permitAll()
+        .requestMatchers("/send-email").permitAll()
         .requestMatchers("/**").denyAll()
 
                 );

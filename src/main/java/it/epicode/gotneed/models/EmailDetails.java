@@ -42,7 +42,7 @@ public class EmailDetails {
         this.message = message;
     }
 
-    // Metodo toString per stampare facilmente i dettagli dell'email (opzionale)
+
     @Override
     public String toString() {
         return "EmailDetails{" +

@@ -64,22 +64,9 @@ public class GirlController {
                     return girlService.saveGirl(girlRequest);
         }
 
-    @PostMapping("/send-email")
-    public String sendEmail(@RequestBody EmailDetails emailDetails) {
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("noreply@example.com");
-            message.setTo(emailDetails.getRecipient());
-            message.setSubject(emailDetails.getSubject());
-            message.setText(emailDetails.getMessage());
-            mailSender.send(message);
-            return "Email sent successfully";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error in sending email: " + e.getMessage();
-        }
 
-}
+
+
 
     @PutMapping("/girls/{id}")
     public Girl updateGirl(@PathVariable int id, @RequestBody @Validated GirlRequest girlRequest, BindingResult bindingResult) {//il parametro d'ingresso è estratto dal body

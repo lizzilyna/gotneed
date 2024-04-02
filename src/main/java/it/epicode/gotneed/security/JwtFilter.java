@@ -50,6 +50,8 @@ public class JwtFilter extends OncePerRequestFilter {
         return
                 matcher.match("/auth/**", request.getServletPath()) ||
                 matcher.match("/helps/**", request.getServletPath()) ||
+                matcher.match("/send-email/", request.getServletPath()) ||
+                matcher.match("/dashboard/", request.getServletPath()) ||
                 matcher.match("/girls/**", request.getServletPath());
 
     }
